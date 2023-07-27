@@ -2,19 +2,24 @@ package atl.academy.controllers;
 
 import atl.academy.models.User;
 import atl.academy.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@RestController()
+@RestController
+@RequestMapping("/api/bar")
 public class UserController {
 
     @Autowired
     UserService userService;
 
-    @PostMapping("/api/bar")
-    public void registerUser(@RequestBody User user){
+    @PostMapping("/register")
+    public void registerUser(@Valid @RequestBody User user){
         userService.registerUser(user);
+    }
+    @GetMapping("/")
+    ResponseEntity<String> hello() {
+        return ResponseEntity.badRequest().body("Bad request!");
     }
 }
