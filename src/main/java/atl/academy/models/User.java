@@ -1,10 +1,7 @@
 package atl.academy.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 @Data
@@ -17,20 +14,20 @@ public class User {
     @Column(name = "id")
     private Long id;
 
-    @NotEmpty(message = "No debe ser nulo")
-    @Column(name = "email",nullable = false)
+    @NotNull(message = "No debe ser null.") @NotBlank(message = "Debe contener un valor.")
+    @Email(message = "Debe contener la estructura de un email.")
+    @Column(name = "email")
     private String email;
 
-    @NotEmpty(message = "No debe ser nulo")
-    @Size(min = 4, max = 16)
-    @Column(name = "password",nullable = false)
+    @NotNull(message = "No debe ser null.") @NotBlank(message = "Debe contener un valor.")
+    @Size(min = 4, max = 32, message = "Debe contener al menos 4 caracteres y maximo 32.")
+    @Column(name = "password")
     private String password;
 
-    @NotEmpty(message = "No debe ser nulo")
     @Column(name = "phone")
     private String phone;
 
-    @NotEmpty(message = "No debe ser nulo")
-    @Column(name ="role_name",nullable = false)
+    @NotNull(message = "No debe ser null.") @NotBlank(message = "Debe contener un valor.")
+    @Column(name ="role_name")
     private String role_name;
 }
