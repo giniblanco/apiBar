@@ -15,7 +15,7 @@ public class User {
     private Long id;
 
     @NotNull(message = "No debe ser null.") @NotBlank(message = "Debe contener un valor.")
-    @Email(message = "Debe contener la estructura de un email.")
+    @Email(message = "Debe contener la estructura de un email.") @Pattern(regexp = "([a-z]|[0-9])+@[a-z]+\\.[a-z]+", message = "El email debe contener un punto.")
     @Column(name = "email")
     private String email;
 
