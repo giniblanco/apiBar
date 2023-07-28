@@ -3,18 +3,13 @@ package atl.academy.controllers;
 import atl.academy.models.User;
 import atl.academy.services.UserService;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import java.util.*;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/bar")
@@ -46,5 +41,10 @@ public class UserController {
     @GetMapping("/")
     ResponseEntity<String> hello() {
         return ResponseEntity.badRequest().body("Bad request!");
+    }
+
+    @DeleteMapping("/api/bar/{id}")
+    public void deleteUser(Long id){
+        userService.deleteUser(id);
     }
 }
