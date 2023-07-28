@@ -29,5 +29,5 @@ public class User {
 
     @NotNull(message = "No debe ser null.") @NotBlank(message = "Debe contener un valor.")
     @Column(name ="role_name")
-    private String role_name;
+    private String roleName;
 }
