@@ -24,5 +24,9 @@ public class Product {
     @Column(name = "price",nullable = false)
     private float price;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_category_FK")
+    private Category category;
+
 
 }

@@ -19,6 +19,14 @@ public class FeedbackUser {
     @Column(name = "score", nullable = false)
     private int score;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_user_FK")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_bar_FK")
+    private Bar bar;
+
 }
 
 

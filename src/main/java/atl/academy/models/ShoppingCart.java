@@ -21,5 +21,12 @@ public class ShoppingCart {
     @Column(name = "state",nullable = false)
     private boolean state;
 
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_user_FK")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "id_bar_FK")
+    private Bar bar;
 
 }
