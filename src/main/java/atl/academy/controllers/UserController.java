@@ -38,13 +38,9 @@ public class UserController {
             return ResponseEntity.ok().body(messageResponse);
         }
     }
-    @GetMapping("/")
-    ResponseEntity<String> hello() {
-        return ResponseEntity.badRequest().body("Bad request!");
-    }
 
-    @DeleteMapping("/api/bar/{id}")
-    public void deleteUser(Long id){
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable("id") Long id){
         userService.deleteUser(id);
     }
 }
