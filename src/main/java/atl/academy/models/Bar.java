@@ -3,6 +3,7 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 
 
 @Entity
@@ -24,8 +25,8 @@ public class Bar {
     @Column(name = "description",nullable = false)
     private String description;
 
-
-
+    @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Menu> menus;
 
 }
 
