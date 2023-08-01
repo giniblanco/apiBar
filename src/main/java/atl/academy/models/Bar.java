@@ -1,18 +1,16 @@
 package atl.academy.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.List;
 
-@Data
+
 @Entity
+@Data
 @Table(name = "bar")
 public class Bar {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",nullable = false)
@@ -27,8 +25,8 @@ public class Bar {
     @Column(name = "description",nullable = false)
     private String description;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> menus;
+
 }
 

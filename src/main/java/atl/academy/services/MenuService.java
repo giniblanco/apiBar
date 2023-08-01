@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Service
 public class MenuService {
@@ -20,8 +19,5 @@ public class MenuService {
 
     public Menu createMenu(Menu menu) {
         return menuRepository.save(menu);
-    }
-    public List<Menu> getAll(){
-        return menuRepository.findAll();
     }
 }
