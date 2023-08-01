@@ -37,15 +37,24 @@ public class MenuController {
     public List<Menu> getMenus(){
         return menuRepository.findAll();
     }
-    @DeleteMapping(value = "/delate/{id}")
-    public String delete(@PathVariable long id){
-        Menu delateMenu = menuRepository.findById(id).get();
-        menuRepository.delete(delateMenu);
-        return "borrado";
+    @PutMapping(value ="/update/{id}")
+    public String updateMenu(@PathVariable long id , @RequestBody Menu menu){
+        Menu updateMenu = menuRepository.findById(id).get();
+        updateMenu.setName(menu.getName());
+        updateMenu.setDescription(menu.getDescription());
+        menuRepository.save(updateMenu);
+        return "Menu Update";
     }
-    @DeleteMapping(value = "/delate")
+    @DeleteMapping(value = "/delete/{id}")
+    public String delete(@PathVariable long id){
+        Menu deleteMenu = menuRepository.findById(id).get();
+        menuRepository.delete(deleteMenu);
+        return "delete";
+    }
+    /*@DeleteMapping(value = "/delete")
     public String borrarTodo(){
         menuRepository.deleteAll();
-        return "borro todo";
+        return "delete all";
     }
+    */
 }
