@@ -1,7 +1,13 @@
 package atl.academy.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Data
@@ -19,7 +25,8 @@ public class Menu {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne
+    @JsonBackReference
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "bar_id", nullable = false)
     private Bar bar;
 }

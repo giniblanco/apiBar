@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/menu")
@@ -17,6 +20,11 @@ public class MenuController {
     @Autowired
     public MenuController(MenuService menuService) {
         this.menuService = menuService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Menu>> getAllMenus(){
+        return ResponseEntity.ok(menuService.getAll());
     }
 
     @PostMapping("/create")
