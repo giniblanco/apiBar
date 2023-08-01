@@ -1,23 +1,27 @@
 package atl.academy.controllers;
 
 import atl.academy.models.Menu;
+import atl.academy.repositories.MenuRepository;
 import atl.academy.services.MenuService;
+import atl.academy.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
 
-    private final MenuService menuService;
-
     @Autowired
     public MenuController(MenuService menuService) {
         this.menuService = menuService;
     }
+    private MenuRepository menuRepository;
+    private final MenuService menuService;
 
     @PostMapping("/create")
     public ResponseEntity<String> createMenu(@RequestBody Menu menu) {
@@ -28,5 +32,20 @@ public class MenuController {
             String errorMessage = "Server error";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         }
+    }
+    @GetMapping(value = "/menus")
+    public List<Menu> getMenus(){
+        return menuRepository.findAll();
+    }
+    @DeleteMapping(value = "/delate/{id}")
+    public String delete(@PathVariable long id){
+        Menu delateMenu = menuRepository.findById(id).get();
+        menuRepository.delete(delateMenu);
+        return "borrado";
+    }
+    @DeleteMapping(value = "/delate")
+    public String borrarTodo(){
+        menuRepository.deleteAll();
+        return "borro todo";
     }
 }
