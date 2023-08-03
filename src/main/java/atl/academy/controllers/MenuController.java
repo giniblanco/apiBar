@@ -3,14 +3,12 @@ package atl.academy.controllers;
 import atl.academy.models.Menu;
 import atl.academy.repositories.MenuRepository;
 import atl.academy.services.MenuService;
-import atl.academy.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/menu")
@@ -23,8 +21,11 @@ public class MenuController {
     private MenuRepository menuRepository;
     private final MenuService menuService;
 
+    // se crea el menu en la base de datos
     @PostMapping("/create")
     public ResponseEntity<String> createMenu(@RequestBody Menu menu) {
+
+        System.out.println(menu);
         try {
             Menu createdMenu = menuService.createMenu(menu);
             return ResponseEntity.status(HttpStatus.OK).body("Menu created successfully");

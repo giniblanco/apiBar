@@ -27,6 +27,4 @@ public class Bar {
 
     @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Menu> menus;
-
 }
-

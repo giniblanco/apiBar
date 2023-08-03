@@ -12,7 +12,7 @@ import java.util.*;
 
 
 @RestController
-@RequestMapping("/api/bar")
+@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired

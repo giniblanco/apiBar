@@ -28,5 +28,4 @@ public class ShoppingCart {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_bar_FK")
     private Bar bar;
-
 }
