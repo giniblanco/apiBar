@@ -24,7 +24,4 @@ public class Bar {
 
     @Column(name = "description",nullable = false)
     private String description;
-
-    @OneToMany(mappedBy = "bar", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Menu> menus;
 }

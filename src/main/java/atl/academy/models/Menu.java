@@ -19,7 +19,7 @@ public class Menu {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bar_id", nullable = false)
     private Bar bar;
 }
