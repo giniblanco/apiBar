@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MenuService {
@@ -14,10 +15,7 @@ public class MenuService {
     private IMenuRepository menuRepository;
 
     public List<Menu> getAll(){
-        List<Menu> allMenus = new ArrayList<>();
-        menuRepository.findAll().forEach(allMenus::add);
-
-        return allMenus;
+        return menuRepository.findAll();
     }
     public void save(Menu menu) {
         menuRepository.save(menu);
@@ -25,5 +23,17 @@ public class MenuService {
     public boolean getByUsername(String name){
         return getAll().stream()
                 .anyMatch(menu -> menu.getName().equals(name));
+    }
+
+    public void delete(long id){
+        menuRepository.deleteById(id);
+    }
+
+    public void deleteAll(){
+        menuRepository.deleteAll();
+    }
+
+    public Optional<Menu> getById(Long id){
+        return menuRepository.findById(id);
     }
 }

@@ -44,25 +44,38 @@ public class MenuController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
-    /*
-    @PutMapping(value ="/update/{id}")
-    public String updateMenu(@PathVariable long id , @RequestBody Menu menu){
-        Menu updateMenu = IMenuRepository.findById(id).get();
-        updateMenu.setName(menu.getName());
-        updateMenu.setDescription(menu.getDescription());
-        IMenuRepository.save(updateMenu);
-        return "Menu Update";
+    @PutMapping
+    public ResponseEntity<Map<String, String>> updateMenu(@RequestBody Menu menu){
+        Map<String, String> response = new HashMap<>();
+
+        if(menuService.getById(menu.getId()).isPresent()){
+            menuService.save(menu);
+            response.put("message", "Menu actualizado correctamente");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            response.put("error", "No existe el menu que usted esta intentando actualizar.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
-    @DeleteMapping(value = "/delete/{id}")
-    public String delete(@PathVariable long id){
-        Menu deleteMenu = IMenuRepository.findById(id).get();
-        IMenuRepository.delete(deleteMenu);
-        return "delete";
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> delete(@PathVariable long id){
+        Map<String, String> response = new HashMap<>();
+        if(menuService.getById(id).isPresent()){
+            menuService.delete(id);
+            response.put("message", "Menu eliminado correctamente");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            response.put("error", "No existe el menu que usted desea eliminar");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
     }
-    @DeleteMapping(value = "/delete")
-    public String borrarTodo(){
-        menuRepository.deleteAll();
-        return "delete all";
+    @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, String>> borrarTodo(){
+        Map<String, String> response = new HashMap<String, String>();
+        menuService.deleteAll();
+        response.put("message", "Todos los menus fueron eliminados");
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
     }
-     */
 }
