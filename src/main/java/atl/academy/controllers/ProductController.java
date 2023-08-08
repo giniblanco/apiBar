@@ -34,7 +34,7 @@ public class ProductController {
     public ResponseEntity<Map<String,Object>> createProduct(@RequestBody Product product) {
         Map<String, Object> response = new HashMap<>();
 
-        if(productService.getByUsername(product.getClass().getName())){
+        if(productService.getByUsername(product.getName())){
             response.put("error", "Producto ya existente.");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
