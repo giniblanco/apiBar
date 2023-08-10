@@ -1,8 +1,6 @@
 package atl.academy.controllers;
 
-import atl.academy.models.Bar;
 import atl.academy.models.Category;
-import atl.academy.models.Product;
 import atl.academy.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
