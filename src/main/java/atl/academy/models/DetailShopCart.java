@@ -3,11 +3,8 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-
-
-@Entity
+@Entity(name = "detail_shop_carts")
 @Data
-@Table(name = "detail_shop_cart")
 public class DetailShopCart {
 
     @Id

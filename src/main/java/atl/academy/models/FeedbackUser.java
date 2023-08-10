@@ -3,9 +3,8 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity
+@Entity(name = "feedback_users")
 @Data
-@Table(name = "feedback_user")
 public class FeedbackUser {
 
     @Id

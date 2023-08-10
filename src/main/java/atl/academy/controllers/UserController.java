@@ -19,7 +19,7 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> registerUser(@Valid @RequestBody User user, BindingResult bindingResult) throws JsonProcessingException {
+    public ResponseEntity<Map<String, Object>> registerUser(@Valid @RequestBody User user, BindingResult bindingResult){
         Map<String, Object> messageResponse = new HashMap<>();
 
         if(bindingResult.hasErrors()){

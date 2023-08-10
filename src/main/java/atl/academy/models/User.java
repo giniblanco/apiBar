@@ -4,9 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+@Entity(name = "users")
 @Data
-@Entity
-@Table(name = "user")
 public class User {
 
     @Id
