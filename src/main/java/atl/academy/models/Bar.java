@@ -3,9 +3,6 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.List;
-
-
 @Entity(name = "bars")
 @Data
 public class Bar {
