@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 
-public interface BarRepository extends JpaRepository<Bar, Long> {
+public interface IBarRepository extends JpaRepository<Bar, Long> {
+    boolean existsByName(String name);
 }
