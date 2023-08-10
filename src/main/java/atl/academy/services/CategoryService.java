@@ -1,5 +1,6 @@
 package atl.academy.services;
 
+import atl.academy.models.Bar;
 import atl.academy.models.Category;
 import atl.academy.models.Product;
 import atl.academy.repositories.ICategoryRepository;
@@ -37,5 +38,16 @@ public class CategoryService {
 
     public Optional<Category> getById(Long id){
         return categoryRepository.findById(id);
+    }
+
+    public Category updateCategory(Long id, Category category){
+
+        Category existingCategory = categoryRepository.findById(id).orElse(null);
+
+        if(existingCategory != null){
+            return categoryRepository.save(category);
+        }
+
+        return null;
     }
 }
