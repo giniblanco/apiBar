@@ -40,4 +40,27 @@ public class CategoryController {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Map<String, String>> delete(@PathVariable long id){
+        Map<String, String> response = new HashMap<>();
+
+        if(categoryService.getById(id).isPresent()){
+            categoryService.delete(id);
+            response.put("message", "Categoria eliminado correctamente");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }else{
+            response.put("error", "No existe la categoria que usted desea eliminar");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+   @DeleteMapping("/delete")
+    public ResponseEntity<Map<String, String>> borrarTodo(){
+        Map<String, String> response = new HashMap<String, String>();
+        categoryService.deleteAll();
+        response.put("message", "Todas las categorias fueron eliminados");
+
+        return new ResponseEntity<>(response , HttpStatus.OK);
+    }
+
 }

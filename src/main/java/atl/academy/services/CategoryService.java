@@ -1,11 +1,13 @@
 package atl.academy.services;
 
 import atl.academy.models.Category;
+import atl.academy.models.Product;
 import atl.academy.repositories.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryService {
@@ -23,5 +25,17 @@ public class CategoryService {
     }
     public boolean categoryExists(String categoryName) {
         return categoryRepository.existsByName(categoryName);
+    }
+
+    public void delete(long id){
+        categoryRepository.deleteById(id);
+    }
+
+    public void deleteAll(){
+        categoryRepository.deleteAll();
+    }
+
+    public Optional<Category> getById(Long id){
+        return categoryRepository.findById(id);
     }
 }
