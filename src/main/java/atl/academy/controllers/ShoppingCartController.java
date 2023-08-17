@@ -31,6 +31,7 @@ public class ShoppingCartController {
         return new ResponseEntity<>(savedCart, HttpStatus.CREATED);
     }
 
+    /*
     @PostMapping("/add-detail")
     public ResponseEntity<?> addDetailToCart(@RequestBody DetailShopCartEntity detailShopCartEntity) {
         boolean productExistsInCart = detailShopCartRepository.findByShoppingCartAndProduct(detailShopCartEntity.getShoppingCartEntity(), detailShopCartEntity.getProductEntity()).isPresent();
@@ -52,5 +53,5 @@ public class ShoppingCartController {
         }
         detailShopCartRepository.delete(existingDetail.get());
         return new ResponseEntity<>("El producto se elimino correctamente.",HttpStatus.OK);
-    }
+    }*/
 }
