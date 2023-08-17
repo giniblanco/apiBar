@@ -1,7 +1,7 @@
 package atl.academy.services;
 
-import atl.academy.models.ShoppingCart;
-import atl.academy.models.DetailShopCart;
+import atl.academy.models.ShoppingCartEntity;
+import atl.academy.models.DetailShopCartEntity;
 
 import atl.academy.repositories.IDetailShopCartRepository;
 import atl.academy.repositories.IShoppingCartRepository;
@@ -17,11 +17,11 @@ public class ShoppingCartService {
     @Autowired
     private IDetailShopCartRepository detailShopCartRepository;
 
-    public ShoppingCart saveShoppingCart(ShoppingCart shoppingCart) {
-        return shoppingCartRepository.save(shoppingCart);
+    public ShoppingCartEntity saveShoppingCart(ShoppingCartEntity shoppingCartEntity) {
+        return shoppingCartRepository.save(shoppingCartEntity);
     }
 
-    public DetailShopCart addDetailToShoppingCart(DetailShopCart detailShopCart) {
-        return detailShopCartRepository.save(detailShopCart);
+    public DetailShopCartEntity addDetailToShoppingCart(DetailShopCartEntity detailShopCartEntity) {
+        return detailShopCartRepository.save(detailShopCartEntity);
     }
 }

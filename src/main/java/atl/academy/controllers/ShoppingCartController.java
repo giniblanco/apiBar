@@ -1,7 +1,7 @@
 package atl.academy.controllers;
 
-import atl.academy.models.DetailShopCart;
-import atl.academy.models.ShoppingCart;
+import atl.academy.models.DetailShopCartEntity;
+import atl.academy.models.ShoppingCartEntity;
 import atl.academy.repositories.IDetailShopCartRepository;
 import atl.academy.services.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,26 +26,26 @@ public class ShoppingCartController {
     private IDetailShopCartRepository detailShopCartRepository;
 
     @PostMapping("/create")
-    public ResponseEntity<ShoppingCart> createShoppingCart(@RequestBody ShoppingCart shoppingCart) {
-        ShoppingCart savedCart = shoppingCartService.saveShoppingCart(shoppingCart);
+    public ResponseEntity<ShoppingCartEntity> createShoppingCart(@RequestBody ShoppingCartEntity shoppingCartEntity) {
+        ShoppingCartEntity savedCart = shoppingCartService.saveShoppingCart(shoppingCartEntity);
         return new ResponseEntity<>(savedCart, HttpStatus.CREATED);
     }
 
     @PostMapping("/add-detail")
-    public ResponseEntity<?> addDetailToCart(@RequestBody DetailShopCart detailShopCart) {
-        boolean productExistsInCart = detailShopCartRepository.findByShoppingCartAndProduct(detailShopCart.getShoppingCart(), detailShopCart.getProduct()).isPresent();
+    public ResponseEntity<?> addDetailToCart(@RequestBody DetailShopCartEntity detailShopCartEntity) {
+        boolean productExistsInCart = detailShopCartRepository.findByShoppingCartAndProduct(detailShopCartEntity.getShoppingCartEntity(), detailShopCartEntity.getProductEntity()).isPresent();
 
         if (productExistsInCart) {
             return new ResponseEntity<>("El producto ya existe en el carrito de compras.", HttpStatus.CONFLICT);
         }
 
-        DetailShopCart savedDetail = shoppingCartService.addDetailToShoppingCart(detailShopCart);
+        DetailShopCartEntity savedDetail = shoppingCartService.addDetailToShoppingCart(detailShopCartEntity);
         return new ResponseEntity<>(savedDetail, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/remove-detail")
-    public ResponseEntity<?> removeDetailFromCart(@RequestBody DetailShopCart detailShopCart) {
-        Optional<DetailShopCart> existingDetail = detailShopCartRepository.findByShoppingCartAndProduct(detailShopCart.getShoppingCart(), detailShopCart.getProduct());
+    public ResponseEntity<?> removeDetailFromCart(@RequestBody DetailShopCartEntity detailShopCartEntity) {
+        Optional<DetailShopCartEntity> existingDetail = detailShopCartRepository.findByShoppingCartAndProduct(detailShopCartEntity.getShoppingCartEntity(), detailShopCartEntity.getProductEntity());
 
         if (!existingDetail.isPresent()) {
             return new ResponseEntity<>("El producto no existe en el carrito de compras.", HttpStatus.NOT_FOUND);

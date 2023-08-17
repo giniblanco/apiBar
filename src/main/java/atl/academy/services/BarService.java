@@ -1,6 +1,6 @@
 package atl.academy.services;
 
-import atl.academy.models.Bar;
+import atl.academy.models.BarEntity;
 import atl.academy.repositories.IBarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,18 +13,18 @@ public class BarService {
     @Autowired
     private IBarRepository barRepository;
 
-    public void save(Bar bar){
-        if(barExists(bar.getName())){
+    public void save(BarEntity barEntity){
+        if(barExists(barEntity.getName())){
             throw new IllegalArgumentException("Existe un bar con el mismo nombre");
         }
-        barRepository.save(bar);
+        barRepository.save(barEntity);
     }
 
     public boolean barExists(String barName){
         return barRepository.existsByName(barName);
     }
 
-    public List<Bar> getAll(){
+    public List<BarEntity> getAll(){
         return barRepository.findAll();
     }
 
@@ -37,11 +37,11 @@ public class BarService {
         }
     }
 
-    public Bar update(Long id, Bar bar){
-        Bar existingBar = barRepository.findById(id).orElse(null);
+    public BarEntity update(Long id, BarEntity barEntity){
+        BarEntity existingBarEntity = barRepository.findById(id).orElse(null);
 
-        if(existingBar != null){
-            return barRepository.save(bar);
+        if(existingBarEntity != null){
+            return barRepository.save(barEntity);
         }
 
         return null;

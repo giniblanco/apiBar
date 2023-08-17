@@ -1,6 +1,6 @@
 package atl.academy.controllers;
 
-import atl.academy.models.Category;
+import atl.academy.models.CategoryEntity;
 import atl.academy.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,10 +29,10 @@ public class CategoryController {
         }
     }
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Category category) {
+    public ResponseEntity<?> create(@RequestBody CategoryEntity categoryEntity) {
         try {
-            Category savedCategory = categoryService.save(category);
-            return new ResponseEntity<>(savedCategory, HttpStatus.CREATED);
+            CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
+            return new ResponseEntity<>(savedCategoryEntity, HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             String errorMessage = "Existe una categoria con el mismo nombre";
             Map<String, String> errorResponse = new HashMap<>();
@@ -64,12 +64,12 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category){
-        if(!id.equals(category.getId())){
+    public ResponseEntity<CategoryEntity> updateCategory(@PathVariable Long id, @RequestBody CategoryEntity categoryEntity){
+        if(!id.equals(categoryEntity.getId())){
             return ResponseEntity.badRequest().build();
         }
 
-        Category updated = categoryService.updateCategory(id, category);
+        CategoryEntity updated = categoryService.updateCategory(id, categoryEntity);
 
         if(updated != null){
             return ResponseEntity.ok(updated);

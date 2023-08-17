@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity(name = "detail_shop_carts")
 @Data
-public class DetailShopCart {
+public class DetailShopCartEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,11 +17,11 @@ public class DetailShopCart {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_shopping_cart_FK")
-    private ShoppingCart shoppingCart;
+    private ShoppingCartEntity shoppingCartEntity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_product_FK")
-    private Product product;
+    private ProductEntity productEntity;
 
     public Long getId() {
         return id;
@@ -39,19 +39,19 @@ public class DetailShopCart {
         this.count = count;
     }
 
-    public ShoppingCart getShoppingCart() {
-        return shoppingCart;
+    public ShoppingCartEntity getShoppingCartEntity() {
+        return shoppingCartEntity;
     }
 
-    public void setShoppingCart(ShoppingCart shoppingCart) {
-        this.shoppingCart = shoppingCart;
+    public void setShoppingCartEntity(ShoppingCartEntity shoppingCartEntity) {
+        this.shoppingCartEntity = shoppingCartEntity;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductEntity getProductEntity() {
+        return productEntity;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
     }
 }

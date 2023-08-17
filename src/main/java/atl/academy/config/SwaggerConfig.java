@@ -7,9 +7,11 @@ import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Configuration
 public class SwaggerConfig {
-
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()

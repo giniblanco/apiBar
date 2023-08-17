@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Entity(name = "payments")
 @Data
-public class Payment {
+public class PaymentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +25,6 @@ public class Payment {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_shopping_cart_FK")
-    private ShoppingCart shoppingCart;
+    private ShoppingCartEntity shoppingCartEntity;
 
 }

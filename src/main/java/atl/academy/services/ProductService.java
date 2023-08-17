@@ -1,6 +1,6 @@
 package atl.academy.services;
 
-import atl.academy.models.Product;
+import atl.academy.models.ProductEntity;
 import atl.academy.repositories.IProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,11 +13,11 @@ public class ProductService {
     @Autowired
     private IProductRepository productRepository;
 
-    public List<Product> getAll(){
+    public List<ProductEntity> getAll(){
         return productRepository.findAll();
     }
-    public void save(Product product) {
-        productRepository.save(product);
+    public void save(ProductEntity productEntity) {
+        productRepository.save(productEntity);
     }
     public boolean getByUsername(String name){
         return getAll().stream()
@@ -32,7 +32,7 @@ public class ProductService {
         productRepository.deleteAll();
     }
 
-    public Optional<Product> getById(Long id){
+    public Optional<ProductEntity> getById(Long id){
         return productRepository.findById(id);
     }
 }

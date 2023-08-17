@@ -1,6 +1,6 @@
 package atl.academy.controllers;
 
-import atl.academy.models.Product;
+import atl.academy.models.ProductEntity;
 import atl.academy.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,25 +31,25 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String,Object>> createProduct(@RequestBody Product product) {
+    public ResponseEntity<Map<String,Object>> createProduct(@RequestBody ProductEntity productEntity) {
         Map<String, Object> response = new HashMap<>();
 
-        if(productService.getByUsername(product.getName())){
+        if(productService.getByUsername(productEntity.getName())){
             response.put("error", "Producto ya existente.");
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }else{
-            productService.save(product);
+            productService.save(productEntity);
             response.put("message", "Producto creado correctamente");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
     @PutMapping
-    public ResponseEntity<Map<String, String>> updateProduct(@RequestBody Product product){
+    public ResponseEntity<Map<String, String>> updateProduct(@RequestBody ProductEntity productEntity){
         Map<String, String> response = new HashMap<>();
 
-        if(productService.getById(product.getId()).isPresent()){
-            productService.save(product);
+        if(productService.getById(productEntity.getId()).isPresent()){
+            productService.save(productEntity);
             response.put("message", "Producto actualizado correctamente");
 
             return new ResponseEntity<>(response, HttpStatus.OK);

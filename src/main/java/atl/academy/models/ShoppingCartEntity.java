@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity(name = "shopping_carts")
 @Data
-public class ShoppingCart {
+public class ShoppingCartEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,11 +22,11 @@ public class ShoppingCart {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_user_FK")
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_bar_FK")
-    private Bar bar;
+    private BarEntity barEntity;
 
     public Long getId() {
         return id;
@@ -52,19 +52,19 @@ public class ShoppingCart {
         this.state = state;
     }
 
-    public User getUser() {
-        return user;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
-    public Bar getBar() {
-        return bar;
+    public BarEntity getBarEntity() {
+        return barEntity;
     }
 
-    public void setBar(Bar bar) {
-        this.bar = bar;
+    public void setBarEntity(BarEntity barEntity) {
+        this.barEntity = barEntity;
     }
 }

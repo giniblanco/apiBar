@@ -1,6 +1,6 @@
 package atl.academy.controllers;
 
-import atl.academy.models.Bar;
+import atl.academy.models.BarEntity;
 import atl.academy.services.BarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,9 +17,9 @@ public class BarController {
     private BarService barService;
 
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody Bar bar){
+    public ResponseEntity<String> create(@RequestBody BarEntity barEntity){
         try {
-            barService.save(bar);
+            barService.save(barEntity);
             return ResponseEntity.status(HttpStatus.CREATED).body("Bar created successfully.");
         } catch (IllegalArgumentException e){
             String errorMessage = "Existe un bar con el mismo nombre";
@@ -28,12 +28,12 @@ public class BarController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Bar>> getAll(){
-        List<Bar> barList = barService.getAll();
-        if(barList.isEmpty()){
+    public ResponseEntity<List<BarEntity>> getAll(){
+        List<BarEntity> barEntityList = barService.getAll();
+        if(barEntityList.isEmpty()){
             return ResponseEntity.notFound().build();
         } else {
-            return ResponseEntity.status(HttpStatus.OK).body(barList);
+            return ResponseEntity.status(HttpStatus.OK).body(barEntityList);
         }
     }
 
@@ -47,12 +47,12 @@ public class BarController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bar> update(@PathVariable Long id, @RequestBody Bar bar){
-        if(!id.equals(bar.getId())){
+    public ResponseEntity<BarEntity> update(@PathVariable Long id, @RequestBody BarEntity barEntity){
+        if(!id.equals(barEntity.getId())){
             return ResponseEntity.badRequest().build();
         }
 
-        Bar updated = barService.update(id, bar);
+        BarEntity updated = barService.update(id, barEntity);
 
         if(updated != null){
             return ResponseEntity.ok(updated);

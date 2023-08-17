@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity(name = "products")
 @Data
-public class Product {
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,11 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_category_FK")
-    private Category category;
+    private CategoryEntity categoryEntity;
     
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "bar_id", nullable = false)
-    private Bar bar;
+    private BarEntity barEntity;
 
     public Long getId() {
         return id;
@@ -61,19 +61,19 @@ public class Product {
         this.price = price;
     }
 
-    public Category getCategory() {
-        return category;
+    public CategoryEntity getCategoryEntity() {
+        return categoryEntity;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategoryEntity(CategoryEntity categoryEntity) {
+        this.categoryEntity = categoryEntity;
     }
 
-    public Bar getBar() {
-        return bar;
+    public BarEntity getBarEntity() {
+        return barEntity;
     }
 
-    public void setBar(Bar bar) {
-        this.bar = bar;
+    public void setBarEntity(BarEntity barEntity) {
+        this.barEntity = barEntity;
     }
 }

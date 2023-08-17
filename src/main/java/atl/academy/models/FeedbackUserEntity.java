@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Entity(name = "feedback_users")
 @Data
-public class FeedbackUser {
+public class FeedbackUserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +20,11 @@ public class FeedbackUser {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_user_FK")
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_bar_FK")
-    private Bar bar;
+    private BarEntity barEntity;
 
 }
 

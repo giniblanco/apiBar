@@ -3,9 +3,9 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-@Entity(name = "categories")
+@Entity(name = "bars")
 @Data
-public class Category {
+public class BarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +15,9 @@ public class Category {
     @Column(name = "name",nullable = false)
     private String name;
 
-    public String getName() {
-        return name;
-    }
+    @Column(name = "address",nullable = false)
+    private String address;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    @Column(name = "description",nullable = false)
+    private String description;
 }

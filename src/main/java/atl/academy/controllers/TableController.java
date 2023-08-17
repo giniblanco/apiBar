@@ -1,6 +1,6 @@
 package atl.academy.controllers;
 
-import atl.academy.models.Table;
+import atl.academy.models.TableEntity;
 import atl.academy.services.TableService;
 import atl.academy.utils.DefaultMessages;
 import jakarta.validation.Valid;
@@ -34,9 +34,9 @@ public class TableController {
         }
     }
     @PostMapping
-    public ResponseEntity<Object> createTable(@Valid @RequestBody Table table, BindingResult verifyErrors){
+    public ResponseEntity<Object> createTable(@Valid @RequestBody TableEntity tableEntity, BindingResult verifyErrors){
         Map<String, Object> response = new HashMap<>();
-        if(tableService.getBy(table.getNumberTable()).isPresent()){
+        if(tableService.getBy(tableEntity.getNumberTable()).isPresent()){
             response.put("error", defaultMessages.FOUND);
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -50,16 +50,16 @@ public class TableController {
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
 
-        tableService.saveTable(table);
+        tableService.saveTable(tableEntity);
         response.put("message", defaultMessages.ADD);
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @PutMapping
-    public ResponseEntity<Map<String, Object>> modifyTable(@RequestBody Table table){
+    public ResponseEntity<Map<String, Object>> modifyTable(@RequestBody TableEntity tableEntity){
         Map<String, Object> response = new HashMap<>();
-        if(tableService.getBy(table.getId()).isPresent()){
-            tableService.saveTable(table);
+        if(tableService.getBy(tableEntity.getId()).isPresent()){
+            tableService.saveTable(tableEntity);
             response.put("message", defaultMessages.MODIFIED);
 
             return new ResponseEntity<>(response, HttpStatus.OK);

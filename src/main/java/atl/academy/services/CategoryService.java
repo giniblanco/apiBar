@@ -1,8 +1,6 @@
 package atl.academy.services;
 
-import atl.academy.models.Bar;
-import atl.academy.models.Category;
-import atl.academy.models.Product;
+import atl.academy.models.CategoryEntity;
 import atl.academy.repositories.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +13,14 @@ public class CategoryService {
     @Autowired
     private ICategoryRepository categoryRepository;
 
-    public List<Category> getAll(){
+    public List<CategoryEntity> getAll(){
         return categoryRepository.findAll();
     }
-    public Category save(Category category) {
-       if (categoryExists(category.getName())) {
+    public CategoryEntity save(CategoryEntity categoryEntity) {
+       if (categoryExists(categoryEntity.getName())) {
            throw new IllegalArgumentException("Existe una categoria con el mismo nombre");
        }
-       return categoryRepository.save(category);
+       return categoryRepository.save(categoryEntity);
     }
     public boolean categoryExists(String categoryName) {
         return categoryRepository.existsByName(categoryName);
@@ -36,16 +34,16 @@ public class CategoryService {
         categoryRepository.deleteAll();
     }
 
-    public Optional<Category> getById(Long id){
+    public Optional<CategoryEntity> getById(Long id){
         return categoryRepository.findById(id);
     }
 
-    public Category updateCategory(Long id, Category category){
+    public CategoryEntity updateCategory(Long id, CategoryEntity categoryEntity){
 
-        Category existingCategory = categoryRepository.findById(id).orElse(null);
+        CategoryEntity existingCategoryEntity = categoryRepository.findById(id).orElse(null);
 
-        if(existingCategory != null){
-            return categoryRepository.save(category);
+        if(existingCategoryEntity != null){
+            return categoryRepository.save(categoryEntity);
         }
 
         return null;

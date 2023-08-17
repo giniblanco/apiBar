@@ -1,17 +1,13 @@
 package atl.academy.models;
 
-import atl.academy.utils.DefaultMessages;
 import jakarta.persistence.*;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Objects;
 
 @Entity(name = "tables")
 @Getter @Setter
-public class Table {
+public class TableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

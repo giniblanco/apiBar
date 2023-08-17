@@ -1,71 +1,89 @@
 package atl.academy.controllers;
 
-import atl.academy.models.User;
+import atl.academy.models.UserEntity;
 import atl.academy.services.UserService;
+import atl.academy.utils.DefaultMessages;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 
 @RestController
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/api/user")
 public class UserController {
-
     @Autowired
     UserService userService;
+    @Autowired
+    DefaultMessages defaultMessages;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, Object>> registerUser(@Valid @RequestBody User user, BindingResult bindingResult){
-        Map<String, Object> messageResponse = new HashMap<>();
-
+    @GetMapping
+    public ResponseEntity<?> getUsers(){
+        if(userService.getAll().isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }else {
+            var users = userService.getAll();
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }
+    }
+    @PostMapping
+    public ResponseEntity<?> register(@Valid @RequestBody UserEntity userEntity, BindingResult bindingResult){
+        Map<String, Object> httpResponse = new LinkedHashMap<>();
         if(bindingResult.hasErrors()){
             Map<String, String> errors = new HashMap<>();
-            messageResponse.put("message", "Se encontraron los siguientes errores.");
+            httpResponse.put("message", "Se encontraron los siguientes errores.");
             bindingResult.getFieldErrors().forEach(
                     f -> errors.put(f.getField(), f.getDefaultMessage())
             );
-            messageResponse.put("errors", errors);
+            httpResponse.put("errors", errors);
 
-            return ResponseEntity.badRequest().body(messageResponse);
+            return new ResponseEntity<>(httpResponse, HttpStatus.BAD_REQUEST);
         }else{
-            userService.registerUser(user);
-            messageResponse.put("message", "Usuario registrado con exito");
+            //Encriptamos el password antes de guardar el user.
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userService.save(userEntity);
+            httpResponse.put("message", "Usuario registrado con exito");
 
-            return ResponseEntity.ok().body(messageResponse);
+            return new ResponseEntity<>(httpResponse, HttpStatus.OK);
         }
     }
 
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id){
-        userService.deleteUser(id);
-    }
+    @DeleteMapping
+    public ResponseEntity<?> deleteUser(@RequestParam Long id){
+        Map<String, Object> httpResponse = new LinkedHashMap<>();
+        if(userService.getBy(id).isPresent()){
+            userService.delete(id);
+            httpResponse.put("message", defaultMessages.DELETE);
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAll(){
-        List<User> barList = userService.getAll();
-        if(barList.isEmpty()){
-            return ResponseEntity.notFound().build();
-        } else{
-            return ResponseEntity.status(HttpStatus.OK).body(barList);
+            return new ResponseEntity<>(httpResponse, HttpStatus.OK);
+        }else{
+            httpResponse.put("error", defaultMessages.NOT_FOUND);
+
+            return new ResponseEntity<>(httpResponse, HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<User> update(@PathVariable Long id, @RequestBody User user){
-        if(!id.equals(user.getId())){
-            return ResponseEntity.badRequest().build();
-        }
+    @PutMapping
+    public ResponseEntity<?> updateUser(@RequestBody UserEntity userEntity){
+        Map<String, Object> httpResponse = new LinkedHashMap<>();
+        if(userService.getBy(userEntity.getId()).isPresent()){
+            //Encriptamos el password antes de guardar el user.
+            userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
+            userService.save(userEntity);
+            httpResponse.put("message", defaultMessages.MODIFIED);
+            return new ResponseEntity<>(httpResponse, HttpStatus.OK);
 
-        User updated = userService.update(id, user);
-
-        if(updated != null){
-            return ResponseEntity.ok(updated);
-        } else{
-            return ResponseEntity.notFound().build();
+        }else{
+            httpResponse.put("error", defaultMessages.NOT_FOUND);
+            return new ResponseEntity<>(httpResponse, HttpStatus.BAD_REQUEST);
         }
     }
 }
