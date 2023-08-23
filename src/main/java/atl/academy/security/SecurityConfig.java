@@ -41,7 +41,8 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(config -> config.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.anyRequest().authenticated();
+                    //auth.requestMatchers("/swagger-ui/index.html#/").permitAll();
+                    auth.anyRequest().permitAll();
                 })
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS); //No manejaremos sesiones.

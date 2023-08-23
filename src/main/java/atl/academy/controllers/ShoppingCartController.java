@@ -4,6 +4,7 @@ import atl.academy.models.DetailShopCartEntity;
 import atl.academy.models.ShoppingCartEntity;
 import atl.academy.repositories.IDetailShopCartRepository;
 import atl.academy.services.ShoppingCartService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class ShoppingCartController {
     private IDetailShopCartRepository detailShopCartRepository;
 
     @PostMapping("/create")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<ShoppingCartEntity> createShoppingCart(@RequestBody ShoppingCartEntity shoppingCartEntity) {
         ShoppingCartEntity savedCart = shoppingCartService.saveShoppingCart(shoppingCartEntity);
         return new ResponseEntity<>(savedCart, HttpStatus.CREATED);

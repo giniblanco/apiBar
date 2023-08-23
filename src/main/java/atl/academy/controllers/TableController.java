@@ -3,6 +3,7 @@ package atl.academy.controllers;
 import atl.academy.models.TableEntity;
 import atl.academy.services.TableService;
 import atl.academy.utils.DefaultMessages;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,7 @@ public class TableController {
             return new ResponseEntity<>(tables, HttpStatus.OK);
         }
     }
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public ResponseEntity<Object> createTable(@Valid @RequestBody TableEntity tableEntity, BindingResult verifyErrors){
         Map<String, Object> response = new HashMap<>();
@@ -55,7 +57,9 @@ public class TableController {
 
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
     @PutMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, Object>> modifyTable(@RequestBody TableEntity tableEntity){
         Map<String, Object> response = new HashMap<>();
         if(tableService.getBy(tableEntity.getId()).isPresent()){
@@ -71,6 +75,7 @@ public class TableController {
     }
 
     @DeleteMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, Object>> deleteTable(@RequestParam Long id){
         Map<String, Object> response = new HashMap<>();
         if(tableService.getBy(id).isPresent()){

@@ -2,6 +2,7 @@ package atl.academy.controllers;
 
 import atl.academy.models.ProductEntity;
 import atl.academy.services.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/product")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
@@ -31,6 +32,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String,Object>> createProduct(@RequestBody ProductEntity productEntity) {
         Map<String, Object> response = new HashMap<>();
 
@@ -45,6 +47,7 @@ public class ProductController {
         }
     }
     @PutMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, String>> updateProduct(@RequestBody ProductEntity productEntity){
         Map<String, String> response = new HashMap<>();
 
@@ -59,6 +62,7 @@ public class ProductController {
         }
     }
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, String>> delete(@PathVariable long id){
         Map<String, String> response = new HashMap<>();
         if(productService.getById(id).isPresent()){
@@ -71,6 +75,7 @@ public class ProductController {
         }
     }
      @DeleteMapping("/delete")
+     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, String>> borrarTodo(){
         Map<String, String> response = new HashMap<String, String>();
         productService.deleteAll();

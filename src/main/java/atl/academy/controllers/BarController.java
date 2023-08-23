@@ -2,6 +2,7 @@ package atl.academy.controllers;
 
 import atl.academy.models.BarEntity;
 import atl.academy.services.BarService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ public class BarController {
     private BarService barService;
 
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<String> create(@RequestBody BarEntity barEntity){
         try {
             barService.save(barEntity);
@@ -38,6 +40,7 @@ public class BarController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<String> delete(@PathVariable Long id){
         if(barService.delete(id)){
             return ResponseEntity.status(HttpStatus.OK).body("bar "+ id +" removed successfully");
@@ -47,6 +50,7 @@ public class BarController {
     }
 
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<BarEntity> update(@PathVariable Long id, @RequestBody BarEntity barEntity){
         if(!id.equals(barEntity.getId())){
             return ResponseEntity.badRequest().build();

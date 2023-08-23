@@ -2,6 +2,7 @@ package atl.academy.controllers;
 
 import atl.academy.models.CategoryEntity;
 import atl.academy.services.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/categories")
 public class CategoryController {
 
     @Autowired
@@ -28,7 +29,9 @@ public class CategoryController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
     }
+
     @PostMapping
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<?> create(@RequestBody CategoryEntity categoryEntity) {
         try {
             CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
@@ -42,6 +45,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, String>> delete(@PathVariable long id){
         Map<String, String> response = new HashMap<>();
 
@@ -55,6 +59,7 @@ public class CategoryController {
         }
     }
    @DeleteMapping("/delete")
+   @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<Map<String, String>> borrarTodo(){
         Map<String, String> response = new HashMap<String, String>();
         categoryService.deleteAll();
@@ -64,6 +69,7 @@ public class CategoryController {
     }
 
     @PutMapping("/update/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<CategoryEntity> updateCategory(@PathVariable Long id, @RequestBody CategoryEntity categoryEntity){
         if(!id.equals(categoryEntity.getId())){
             return ResponseEntity.badRequest().build();
