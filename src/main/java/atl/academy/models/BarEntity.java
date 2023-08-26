@@ -3,6 +3,8 @@ package atl.academy.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity(name = "bars")
 @Data
 public class BarEntity {
@@ -20,4 +22,9 @@ public class BarEntity {
 
     @Column(name = "description",nullable = false)
     private String description;
+
+    @OneToMany(targetEntity = FeedbackUserEntity.class,
+            fetch = FetchType.EAGER,
+            mappedBy = "barEntity")
+    private List<FeedbackUserEntity> feedbackUsers;
 }

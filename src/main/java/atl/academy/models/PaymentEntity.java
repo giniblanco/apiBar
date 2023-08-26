@@ -17,11 +17,11 @@ public class PaymentEntity {
     @Column(name = "discount",nullable = false)
     private float discount;
 
-    @Column(name = "amount",nullable = false)
-    private float amount;
-
     @Column(name = "date_pay",nullable = false)
     private LocalDate datePay;
+
+    @Column(name = "status", nullable = false)
+    private boolean status;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_shopping_cart_FK")

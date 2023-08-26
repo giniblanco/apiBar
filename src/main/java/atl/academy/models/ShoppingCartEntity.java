@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "shopping_carts")
 @Data
@@ -27,6 +28,11 @@ public class ShoppingCartEntity {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_bar_FK")
     private BarEntity barEntity;
+
+    @OneToMany(targetEntity = DetailShopCartEntity.class,
+            fetch = FetchType.EAGER,
+            mappedBy = "shoppingCartEntity")
+    private List<DetailShopCartEntity> detailsShopCartEntity;
 
     public Long getId() {
         return id;
