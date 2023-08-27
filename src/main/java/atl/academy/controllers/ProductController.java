@@ -2,7 +2,13 @@ package atl.academy.controllers;
 
 import atl.academy.models.ProductEntity;
 import atl.academy.services.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "Products", description = "Operations related to products")
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -19,6 +26,11 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
+    @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Get the list of products", description = "Retrieve the list of all products.")
+    @ApiResponse(responseCode = "200", description = "List of products",
+            content = @Content(array = @ArraySchema(schema = @Schema(implementation = ProductEntity.class))))
+    @ApiResponse(responseCode = "204", description = "No products available")
     public ResponseEntity<Map<String, Object>> getProducts(){
         Map<String, Object> response = new HashMap<>();
         var allProducts = productService.getAll();
@@ -33,6 +45,9 @@ public class ProductController {
 
     @PostMapping
     @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Create a product", description = "Create a new product in the database.")
+    @ApiResponse(responseCode = "200", description = "Product created successfully")
+    @ApiResponse(responseCode = "400", description = "Product already exists or invalid request data")
     public ResponseEntity<Map<String,Object>> createProduct(@RequestBody ProductEntity productEntity) {
         Map<String, Object> response = new HashMap<>();
 
@@ -48,6 +63,9 @@ public class ProductController {
     }
     @PutMapping
     @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Update a product", description = "Updates the information of a product.")
+    @ApiResponse(responseCode = "200", description = "Product updated successfully")
+    @ApiResponse(responseCode = "400", description = "Product not found or invalid request data")
     public ResponseEntity<Map<String, String>> updateProduct(@RequestBody ProductEntity productEntity){
         Map<String, String> response = new HashMap<>();
 
@@ -76,11 +94,14 @@ public class ProductController {
     }
      @DeleteMapping("/delete")
      @SecurityRequirement(name = "bearerAuth")
-    public ResponseEntity<Map<String, String>> borrarTodo(){
+     @SecurityRequirement(name = "bearerAuth")
+     @Operation(summary = "Delete all products", description = "Deletes all products from the database.")
+     @ApiResponse(responseCode = "200", description = "All products deleted successfully")
+     public ResponseEntity<Map<String, String>> borrarTodo(){
         Map<String, String> response = new HashMap<String, String>();
         productService.deleteAll();
         response.put("message", "Todos los productos fueron eliminados");
 
         return new ResponseEntity<>(response , HttpStatus.OK);
-    }
+     }
 }

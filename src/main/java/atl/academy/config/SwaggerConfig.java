@@ -19,8 +19,8 @@ import io.swagger.v3.oas.annotations.info.Info;
                         name = "Team2 - ATL Academy",
                         email = "team2@atlacademy.com"
                 ),
-                description = "OpenAPI - Documentation for API developed on SpringBoot.",
-                title = "OpenAPI - Team2",
+                description = "API BAR - Documentation for API developed on SpringBoot.",
+                title = "API BAR - Team2",
                 version = "1.0"
         ),
         servers = {

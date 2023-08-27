@@ -3,7 +3,13 @@ package atl.academy.controllers;
 import atl.academy.models.TableEntity;
 import atl.academy.services.TableService;
 import atl.academy.utils.DefaultMessages;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
+@Tag(name = "Tables", description = "Operations related to tables")
 @RestController
 @RequestMapping("/api/tables")
 public class TableController {
@@ -23,6 +30,9 @@ public class TableController {
     DefaultMessages defaultMessages;
 
     @GetMapping
+    @Operation(summary = "Get the list of tables", description = "Retrieve the list of all tables.")
+    @ApiResponse(responseCode = "200", description = "List of tables", content = @Content(array = @ArraySchema(schema = @Schema(implementation = TableEntity.class))))
+    @ApiResponse(responseCode = "204", description = "No content")
     public ResponseEntity<Object> GetTables(){
         Map<String, Object> response = new HashMap<>();
         var tables = tableService.getTables();
@@ -36,6 +46,9 @@ public class TableController {
     }
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
+    @Operation(summary = "Create a table", description = "Create a new table in the database.")
+    @ApiResponse(responseCode = "201", description = "Table created successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid request data")
     public ResponseEntity<Object> createTable(@Valid @RequestBody TableEntity tableEntity, BindingResult verifyErrors){
         Map<String, Object> response = new HashMap<>();
         if(tableService.getBy(tableEntity.getNumberTable()).isPresent()){
@@ -60,6 +73,10 @@ public class TableController {
 
     @PutMapping
     @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Update a table", description = "Updates the information of a table.")
+    @ApiResponse(responseCode = "200", description = "Table updated successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid request data")
+    @ApiResponse(responseCode = "404", description = "Table not found")
     public ResponseEntity<Map<String, Object>> modifyTable(@RequestBody TableEntity tableEntity){
         Map<String, Object> response = new HashMap<>();
         if(tableService.getBy(tableEntity.getId()).isPresent()){
@@ -76,6 +93,10 @@ public class TableController {
 
     @DeleteMapping
     @SecurityRequirement(name = "bearerAuth")
+    @Operation(summary = "Delete a table", description = "Deletes a table from the database.")
+    @ApiResponse(responseCode = "200", description = "Table deleted successfully")
+    @ApiResponse(responseCode = "400", description = "Invalid request data")
+    @ApiResponse(responseCode = "404", description = "Table not found")
     public ResponseEntity<Map<String, Object>> deleteTable(@RequestParam Long id){
         Map<String, Object> response = new HashMap<>();
         if(tableService.getBy(id).isPresent()){
