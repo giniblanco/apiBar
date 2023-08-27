@@ -28,4 +28,8 @@ public class UserService {
     public List<UserEntity> getAll() {
         return (List<UserEntity>) userRepository.findAll();
     }
+
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
 }

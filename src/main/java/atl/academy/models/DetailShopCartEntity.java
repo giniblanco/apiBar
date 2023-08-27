@@ -1,7 +1,10 @@
 package atl.academy.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.Objects;
 
 @Entity(name = "detail_shop_carts")
 @Data
@@ -17,6 +20,7 @@ public class DetailShopCartEntity {
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_shopping_cart_FK")
+    @JsonIgnore
     private ShoppingCartEntity shoppingCartEntity;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
@@ -46,12 +50,11 @@ public class DetailShopCartEntity {
     public void setShoppingCartEntity(ShoppingCartEntity shoppingCartEntity) {
         this.shoppingCartEntity = shoppingCartEntity;
     }
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
     public ProductEntity getProductEntity() {
         return productEntity;
-    }
-
-    public void setProductEntity(ProductEntity productEntity) {
-        this.productEntity = productEntity;
     }
 }

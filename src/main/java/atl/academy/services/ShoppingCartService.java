@@ -3,6 +3,7 @@ package atl.academy.services;
 import atl.academy.models.ShoppingCartEntity;
 import atl.academy.models.DetailShopCartEntity;
 
+import atl.academy.models.UserEntity;
 import atl.academy.repositories.IDetailShopCartRepository;
 import atl.academy.repositories.IShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,8 @@ public class ShoppingCartService {
 
     public DetailShopCartEntity addDetailToShoppingCart(DetailShopCartEntity detailShopCartEntity) {
         return detailShopCartRepository.save(detailShopCartEntity);
+    }
+    public ShoppingCartEntity findByUser(UserEntity userEntity) {
+        return shoppingCartRepository.findByUserEntity(userEntity);
     }
 }
