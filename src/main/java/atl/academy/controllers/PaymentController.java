@@ -2,6 +2,7 @@ package atl.academy.controllers;
 
 import atl.academy.models.PaymentEntity;
 import atl.academy.services.PaymentService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,6 +25,7 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    @Operation(summary = "Create a payment", description = "Create a new payment.")
     @PostMapping
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponse(responseCode = "201", description = "Payment created successfully",
@@ -33,6 +35,7 @@ public class PaymentController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Payment created successfully.");
     }
 
+    @Operation(summary = "Update a payment", description = "Update an existing payment by ID.")
     @PutMapping("/{id}")
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponse(responseCode = "200", description = "Payment updated successfully",
@@ -53,6 +56,7 @@ public class PaymentController {
         }
     }
 
+    @Operation(summary = "Get all payments", description = "Get a list of all payments.")
     @GetMapping
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponse(responseCode = "200", description = "List of payments",
@@ -68,6 +72,7 @@ public class PaymentController {
         }
     }
 
+    @Operation(summary = "Get payment by ID", description = "Get a payment by its ID.")
     @GetMapping("/{id}")
     @SecurityRequirement(name = "bearerAuth")
     @ApiResponse(responseCode = "200", description = "Payment found",

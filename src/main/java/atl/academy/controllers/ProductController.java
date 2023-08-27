@@ -79,8 +79,11 @@ public class ProductController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
     }
+    @Operation(summary = "Delete a product", description = "Delete a product by its ID.")
     @DeleteMapping("/{id}")
     @SecurityRequirement(name = "bearerAuth")
+    @ApiResponse(responseCode = "200", description = "Product deleted successfully")
+    @ApiResponse(responseCode = "400", description = "Product not found", content = @Content(schema = @Schema(implementation = Map.class)))
     public ResponseEntity<Map<String, String>> delete(@PathVariable long id){
         Map<String, String> response = new HashMap<>();
         if(productService.getById(id).isPresent()){

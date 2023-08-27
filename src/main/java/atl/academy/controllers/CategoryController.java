@@ -41,8 +41,14 @@ public class CategoryController {
         }
     }
 
+    @Operation(summary = "Create a category", description = "Create a new category.")
     @PostMapping
     @SecurityRequirement(name = "bearerAuth")
+    @ApiResponse(responseCode = "201", description = "Category created successfully",
+            content = @Content(schema = @Schema(implementation = CategoryEntity.class)))
+    @ApiResponse(responseCode = "400", description = "Invalid request or category with the same name already exists",
+            content = @Content(schema = @Schema(implementation = Map.class, example = "{\"error\":\"Existe una categoria con el mismo nombre\"}")))
+
     public ResponseEntity<?> create(@RequestBody CategoryEntity categoryEntity) {
         try {
             CategoryEntity savedCategoryEntity = categoryService.save(categoryEntity);
