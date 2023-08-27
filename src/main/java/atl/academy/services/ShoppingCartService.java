@@ -9,6 +9,8 @@ import atl.academy.repositories.IShoppingCartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ShoppingCartService {
 
@@ -27,5 +29,8 @@ public class ShoppingCartService {
     }
     public ShoppingCartEntity findByUser(UserEntity userEntity) {
         return shoppingCartRepository.findByUserEntity(userEntity);
+    }
+    public List<ShoppingCartEntity> findAllByUser(UserEntity userEntity) {
+        return shoppingCartRepository.findAllByUserEntity(userEntity);
     }
 }
